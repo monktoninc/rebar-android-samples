@@ -12,7 +12,7 @@ We will only officially support two major version behind at this time (Android 9
 ## Cloning from Github
 
 Clone this sample repository to your development machine.
-Add the `rebar.<version>.aar` to the `rebar-core` module under this project.
+Add the `rebar-<version>.aar` to the `rebar-core` module under this project.
 This is not included in the git repo.
 
 To clone run the command `git clone https://github.com/monktoninc/rebar-android-samples.git`
