@@ -7,7 +7,7 @@ This repository will have more information as time goes on.
 Monkton only tests and develops with Android Studio (Current version 3.2).
 
 Rebar only supports Android 8.0 (API level 26) and newer.
-We will Only support two major version behind at this time. Android 9.x - Android 10.x
+We will only officially support two major version behind at this time (Android 9.x - Android 10.x).
 
 ## Cloning from Github
 
