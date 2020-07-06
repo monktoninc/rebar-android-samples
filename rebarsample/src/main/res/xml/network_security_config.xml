@@ -1,0 +1,16 @@
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+            <certificates src="user" />
+        </trust-anchors>
+    </base-config>
+    <!--
+    Necessary for OCSP checks, at this time. Here you will want to list domains for your
+    OCSP callbacks in your leaf server certificate chain.
+    -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">comodoca.com</domain>
+        <domain includeSubdomains="true">amazontrust.com</domain>
+    </domain-config>
+</network-security-config>

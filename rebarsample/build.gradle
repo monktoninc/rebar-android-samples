@@ -1,0 +1,182 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+// This is a configuration setting for Okta
+android.defaultConfig.manifestPlaceholders = [
+        "appAuthRedirectScheme": "io.monkton.rebarsample"
+]
+
+androidExtensions {
+
+    // @Parcelize extensions
+    features = ["parcelize"]
+
+    // Synthetic views
+    experimental = true
+
+}
+
+android {
+    compileSdkVersion 29
+    defaultConfig {
+        applicationId "io.monkton.rebarsample"
+        minSdkVersion 26
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+
+        release {
+            minifyEnabled false
+            debuggable false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            debuggable true
+        }
+
+    }
+
+    // Required for Okta
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    sourceSets {
+        // Defines how we import the development assets for configuration
+        debug {
+            assets.srcDirs = ['src/development/assets']
+        }
+        release {
+            assets.srcDirs = ['src/production/assets']
+        }
+    }
+
+
+    // Gradle automatically adds 'android.test.runner' as a dependency.
+    useLibrary 'android.test.runner'
+    useLibrary 'android.test.base'
+    useLibrary 'android.test.mock'
+
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.2.0'
+
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.google.android.material:material:1.1.0'
+
+    // https://github.com/johncarl81/parceler
+    implementation 'org.parceler:parceler-api:1.1.12'
+    annotationProcessor 'org.parceler:parceler:1.1.12'
+
+    // Necessary for Push Notifications
+    // You will need to add the google-services.json file to accept GCM
+//    implementation 'com.google.firebase:firebase-core:16.0.4'
+//    implementation 'com.google.firebase:firebase-messaging:17.3.3'
+
+    testImplementation 'junit:junit:4.12'
+
+    // Add rebar-core AAR
+    implementation project(':rebar-core')
+
+    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    // Core library
+    androidTestImplementation 'com.google.truth:truth:1.0.1'
+    androidTestImplementation 'androidx.test:core:1.2.0'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.ext:truth:1.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-accessibility:3.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-web:3.2.0'
+    androidTestImplementation 'androidx.test.espresso.idling:idling-concurrent:3.2.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-idling-resource:3.2.0'
+
+}
+
+
+// Updates the app.swigtag version
+gradle.taskGraph.beforeTask { task ->
+    if (task.name.contains('preBuild')) {
+        exec {
+            commandLine 'sh', 'swidtag.sh'
+        }
+    }
+}
+
+
+def getLocalVariable(key) {
+
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    def var = properties.getProperty(key, null)
+    if (var == null)
+        throw new GradleException(key + " Not Found.")
+
+    return var
+}
+
+
+// We need to embed the FIPS signature and then resign the APK
+gradle.taskGraph.afterTask { task ->
+
+    if (task.name == 'assembleDebug' && task.project.name.contains("rebarsample")) {
+        exec {
+            commandLine 'sh' ,
+                    'build-sign', // build-sign shell script
+                    'debug', // Mode we are building
+                    'debug/rebarsample-debug.apk', // Path to the APK
+                    getLocalVariable('signing.certificate.jks'), // Path to the signing key
+                    getLocalVariable('signing.certificate.alias'), // Alias for the signing key
+                    'debug/rebarsample-debug.apk', // Rename the package to
+                    getLocalVariable('signing.certificate.password') // password for the signing certificate
+        }
+    }
+    else if (task.name == 'assembleDebugAndroidTest' && task.project.name.contains("rebarsample")) {
+        exec {
+            commandLine 'sh',
+                    'build-sign', // build-sign shell script
+                    'debug', // Mode we are building
+                    'debug/rebarsample-debug-androidTest.apk', // Path to the APK
+                    getLocalVariable('signing.certificate.jks'), // Path to the signing key
+                    getLocalVariable('signing.certificate.alias'), // Alias for the signing key
+                    'debug/rebarsample-debug-androidTest.apk', // Rename the package to
+                    getLocalVariable('signing.certificate.password') // password for the signing certificate
+        }
+    }
+    else if (task.name == 'assembleRelease' && task.project.name.contains("rebarsample")) {
+        exec {
+            commandLine 'sh',
+                    'build-sign', // build-sign shell script
+                    'release', // Mode we are building
+                    'release/rebarsample-release-unsigned.apk', // Path to the APK
+                    getLocalVariable('signing.certificate.jks'), // Path to the signing key
+                    getLocalVariable('signing.certificate.release.alias'), // Alias for the signing key
+                    'release/rebarsample-signed.apk', // Rename the package to
+                    getLocalVariable('signing.certificate.release.password') // password for the signing certificate
+        }
+    }
+
+}
+
+// Necessary for Push Notifications
+// apply plugin: 'com.google.gms.google-services'

@@ -1,0 +1,1 @@
+include ':rebarsample', ':rebar-core'

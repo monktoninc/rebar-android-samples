@@ -1,0 +1,30 @@
+#!/bin/sh
+set -e
+
+# The app to build
+APP="$1"
+
+# the type of build we are performing 
+BUILD_TYPE="$2"
+
+# Cleanup the app
+./gradlew  :$APP:clean
+
+# Build the versions
+if [ "$BUILD_TYPE" = "release" ]
+then
+    ./gradlew  :$APP:assembleRelease
+fi
+if [ "$BUILD_TYPE" = "debug" ]
+then
+    ./gradlew  :$APP:assembleDebug
+fi
+if [ "$BUILD_TYPE" = "auto" ]
+then
+    ./gradlew  :$APP:assembleAuto
+fi
+if [ "$BUILD_TYPE" = "niap" ]
+then
+    ./gradlew  :$APP:assembleNiap
+fi
+

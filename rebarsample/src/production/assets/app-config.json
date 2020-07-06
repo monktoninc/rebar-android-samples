@@ -1,0 +1,46 @@
+{
+  "rebar.api.url": "https://api.example.com/v1",
+  "rebar.tls.pinned": ["<add SHA512 pins>"],
+
+  "rebar.firebase": false,
+  "rebar.screen.main": "io.monkton.rebarsample.MainActivity",
+  "rebar.gcm.handler-x": "io.monkton.rebarsample.gcm.SampleGCMHandler",
+  "rebar.protect.ui": false,
+
+  "rebar.color": "#00aaea",
+
+  "rebar.permissions": {
+    "camera": { "request": "required" },
+    "dod": { "request": "required" }
+  },
+  "rebar.tls.ciphers": [
+    "TLS_RSA_WITH_AES_128_CBC_SHA",
+    "TLS_RSA_WITH_AES_128_CBC_SHA256",
+    "TLS_RSA_WITH_AES_256_CBC_SHA256",
+    "TLS_RSA_WITH_AES_256_GCM_SHA384",
+    "TLS_DHE_RSA_WITH_AES_128_CBC_SHA256",
+    "TLS_DHE_RSA_WITH_AES_256_CBC_SHA256",
+    "TLS_DHE_RSA_WITH_AES_256_GCM_SHA384",
+    "TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256",
+    "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256",
+    "TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384",
+    "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384",
+    "TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256",
+    "TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384",
+    "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256",
+    "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384"],
+
+  "rebar.niap": true,
+  "rebar.niap-audit": false,
+  "rebar.tlsLogging": false,
+  "rebar.continueOnOCSPError": true,
+  "rebar.continueOnOCSPSigningMissing": false,
+
+  "rebar.screen.welcome": null,
+  "rebar.app.logo": "level-icon-app",
+
+  "rebar.auth":"credentials",
+  "rebar.account.create": null,
+  "rebar.environment": "production"
+
+}

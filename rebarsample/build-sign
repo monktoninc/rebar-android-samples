@@ -1,0 +1,42 @@
+#!/bin/sh
+set -e
+
+BUILD_TYPE='release'
+APK_NAME="$2"
+SIGNING_KEYSTORE="$3"
+KEY_ALIAS="$4"
+RENAME_APP_TARGET="$5"
+ANDROID_KEYSTORE_PASSCODE="$6"
+
+# Determine build type
+if [ "$1" = "release" ]
+then
+    BUILD_TYPE='release'
+fi
+# Determine build type
+if [ "$1" = "debug" ]
+then
+    BUILD_TYPE='debug'
+fi
+
+# See if we have a key alias
+if [ "$KEY_ALIAS" = "" ]
+then
+    KEY_ALIAS="androiddebugkey"
+fi
+
+# Perform the FIPS Signing
+java  -cp ../ccj-3.0.1.jar -jar ../fips-signer.jar build/outputs/apk/$APK_NAME
+
+# Sign the jar
+jarsigner -verbose -keystore $SIGNING_KEYSTORE build/outputs/apk/$APK_NAME $KEY_ALIAS -storepass $ANDROID_KEYSTORE_PASSCODE > /dev/null
+
+# Generate the signed build name
+if [ "$RENAME_APP_TARGET" != "" ] && [ "$RENAME_APP_TARGET" != "$APK_NAME" ]
+then
+    cp build/outputs/apk/$APK_NAME build/outputs/apk/$RENAME_APP_TARGET
+    rm -rf build/outputs/apk/$APK_NAME
+fi
+
+
+

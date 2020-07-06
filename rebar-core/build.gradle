@@ -1,0 +1,4 @@
+configurations.maybeCreate("default")
+artifacts.add("default", file('rebar-1.0.108.aar'))
+
+

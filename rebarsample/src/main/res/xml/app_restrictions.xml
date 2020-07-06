@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<restrictions xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <restriction
+        android:key="encoded"
+        android:title="Rebar Encoded Configuration"
+        android:restrictionType="string"
+        android:defaultValue="" />
+
+    <restriction
+        android:key="signature"
+        android:title="Rebar Encoded Configuration Signature"
+        android:restrictionType="string"
+        android:defaultValue="" />
+
+</restrictions>

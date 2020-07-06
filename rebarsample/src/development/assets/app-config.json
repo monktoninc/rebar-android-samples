@@ -1,0 +1,20 @@
+{
+  "__Comment__": "This is the app configuration for Sample App on iOS — you should obtain this via the Rebar Hub",
+  "__Comment_Host__": "This defines the host that the Rebar SDK will connect to",
+  "rebar.api.host": "api.example.com",
+  "__Comment_TLS__": "This defines the root TLS Pins that the Rebar SDK will connect to",
+  "rebar.tls.pinned": [
+    "add-SHA512-pins"
+  ],
+
+  "rebar.debug": true,
+  "rebar.firebase": false,
+  "rebar.protect.ui": true,
+
+  "rebar.screen.main": "io.monkton.rebarsample.MainActivity",
+  "rebar.gcm.handler": "io.monkton.rebarsample.gcm.SampleGCMHandler",
+
+  "rebar.app.logo": null,
+  "rebar.continueOnOCSPError": true
+
+}
