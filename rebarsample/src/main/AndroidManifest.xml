@@ -57,16 +57,24 @@
         <activity android:exported="false" android:name="io.monkton.rebar.ui.registration.InitialSetupActivity" />
         <activity android:exported="false" android:name="io.monkton.rebar.ui.registration.CreateAccountActivity" />
 
+        <!-- Authentication Screen -->
         <activity android:exported="false" android:name="io.monkton.rebar.ui.authentication.AppLoginActivity" />
         <activity android:exported="false" android:name="io.monkton.rebar.ui.authentication.DerivedLoginActivity" />
         <activity android:exported="false" android:name="io.monkton.rebar.ui.authentication.KeychainCredentialActivity" />
         <activity android:exported="false" android:name="io.monkton.rebar.ui.authentication.PurebredLoginActivity" />
+        <activity android:exported="false" android:name="io.monkton.rebar.ui.authentication.OktaLoginActivity" />
 
-        <activity android:exported="false" android:name="io.monkton.rebar.ui.permissions.PushPermissionActivity" />
+        <!-- Permission screens -->
+        <activity android:exported="false" android:name="io.monkton.rebar.ui.permissions.BluetoothAdminPermissionActivity" />
         <activity android:exported="false" android:name="io.monkton.rebar.ui.permissions.CameraPermissionActivity" />
+        <activity android:exported="false" android:name="io.monkton.rebar.ui.permissions.DoDBannerPermissionActivity" />
+        <activity android:exported="false" android:name="io.monkton.rebar.ui.permissions.ExternalStoragePermissionActivity" />
         <activity android:exported="false" android:name="io.monkton.rebar.ui.permissions.LocationPermissionActivity" />
         <activity android:exported="false" android:name="io.monkton.rebar.ui.permissions.MicrophonePermissionActivity" />
-        <activity android:exported="false" android:name="io.monkton.rebar.ui.permissions.DoDBannerPermissionActivity" />
+        <activity android:exported="false" android:name="io.monkton.rebar.ui.permissions.NFCBannerPermissionActivity" />
+        <activity android:exported="false" android:name="io.monkton.rebar.ui.permissions.PIIPermissionActivity" />
+        <activity android:exported="false" android:name="io.monkton.rebar.ui.permissions.PushPermissionActivity" />
+
 
         <!-- App Main Activity -->
         <activity android:exported="false" android:name="io.monkton.rebarsample.MainActivity" />
