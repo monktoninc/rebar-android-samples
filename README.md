@@ -50,4 +50,3 @@ of updating the SWID Tags automatically during build time, based off the version
 gradle file.
 
 Edit the `rebarsample/src/main/assets/app.swidtag` file and add your organizations descriptive information.
-

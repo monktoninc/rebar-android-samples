@@ -75,7 +75,6 @@
         <activity android:exported="false" android:name="io.monkton.rebar.ui.permissions.PIIPermissionActivity" />
         <activity android:exported="false" android:name="io.monkton.rebar.ui.permissions.PushPermissionActivity" />
 
-
         <!-- App Main Activity -->
         <activity android:exported="false" android:name="io.monkton.rebarsample.MainActivity" />
         <activity android:exported="false" android:name="io.monkton.rebarsample.ui.GenericItemEditorActivity" />
